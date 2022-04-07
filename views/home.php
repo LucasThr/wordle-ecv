@@ -3,26 +3,34 @@
 
 $game = new Game();
 if (isset($_POST['word'])) {
-  $game->submit($_POST['word']);
+  $game->send($_POST['word']);
 }
 ?>
 
 
 <?= $game->state ?>
 <?php foreach ($game->trials as $letters) : ?>
-  <p>
+  <div style="display:flex;flex-direction:row;padding:3px">
     <?php foreach ($letters as $letter) : ?>
-      <span style="background-color: <?= $letter->color ?>"><?= $letter->letter ?></span>
+      <div style="border: 1px solid black;padding:2px;width:14px;text-align:center;background-color: <?= $letter->color ?>"><?= $letter->letter ?></div>
     <?php endforeach; ?>
-  </p>
+  </div>
 <?php endforeach; ?>
-<?php if ($game->state === 'in_progress') : ?>
+<?php if (!isset($_POST['word'])) : ?>
+  <div style="display:flex;flex-direction:row;padding:3px">
+    <?php foreach (str_split($game->word) as $letter) : ?>
+      <div style="border: 1px solid black;padding:2px;width:14px;height:20px;text-align:center"></div>
+    <?php endforeach; ?>
+  </div>
+<?php endif; ?>
+
+<?php if ($game->state === 'IN PROGRESS') : ?>
   <form action="/" method="post">
-    <input name="word" type="text" minlength="<?= strlen($game->word) ?>" maxlength="<?= strlen($game->word) ?>">
+    <input onkeydown="return /[a-z]/i.test(event.key)" name="word" type="text" required minlength="<?= strlen($game->word) ?>" maxlength="<?= strlen($game->word) ?>">
   </form>
 <?php endif; ?>
-<?php if ($game->state === 'lost' or $game->state === 'win') : ?>
+<?php if ($game->state === 'LOSE' or $game->state === 'WIN') : ?>
   <form action="/" method="post">
-    <button type="submit">New game</button>
+    <button name="newgame" type="submit">New game</button>
   </form>
 <?php endif; ?>

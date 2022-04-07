@@ -5,7 +5,6 @@ class Router
   public static string $path;
   public array $routes = [
     '/' =>        'home',
-    '/contact' => 'form',
     '/404' =>     '404',
   ];
 
@@ -14,7 +13,7 @@ class Router
     self::$path = $_SERVER['PATH_INFO'] ?? '/';
   }
 
-  public function start(): void
+  public function engine(): void
   {
     $file = $this->routes[self::$path] ?? $this->routes['404'];
     require_once '../views/' . $file . '.php';

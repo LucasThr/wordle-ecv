@@ -19,7 +19,7 @@ class Letter
     if (!$this->IsInWord()) return;
     $this->color = 'yellow';
     if (!$this->IsAtGoodPosition()) return;
-    $this->color = 'red';
+    $this->color = 'green';
   }
 
   private function IsInWord(): bool

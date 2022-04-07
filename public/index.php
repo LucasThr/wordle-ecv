@@ -6,4 +6,6 @@ require_once '../class/Game.php';
 require_once '../class/Letter.php';
 
 $router = new Router();
-$router->start();
+$router->engine();
+
+// php -S localhost:8000 -t public

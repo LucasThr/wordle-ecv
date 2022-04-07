@@ -5,7 +5,7 @@ class Game
 {
   public string $word;
   public array $trials = [];
-  public string $state = 'in_progress';
+  public string $state = 'IN PROGRESS';
 
   public function __construct()
   {
@@ -17,14 +17,13 @@ class Game
     }
     if (!isset($_COOKIE['RANDOM_WORD'])) {
       $word = new Word();
-      $word = $word->getWord();
+      $word = $word->getNewWord();
       setcookie("RANDOM_WORD", $word);
     }
     $this->word = $word;
-    // echo 'A TROUVER : ' . $this->word;
   }
 
-  public function submit(string $inputs): void
+  public function send(string $inputs): void
   {
 
     $tabOfLetter = str_split(strtoupper($inputs));
@@ -42,12 +41,12 @@ class Game
   public function setGameState()
   {
     if ($this->isWinning()) {
-      $this->state = 'win';
+      $this->state = 'WIN';
       $this->cleanCookies();
       return;
     }
     if ($this->isLost()) {
-      $this->state = 'lost';
+      $this->state = 'LOSE';
       $this->cleanCookies();
       return;
     }
@@ -57,14 +56,14 @@ class Game
   {
 
     foreach (end($this->trials) as $letter) {
-      if ($letter->color !==  "red") return false;
+      if ($letter->color !==  "green") return false;
     }
     return true;
   }
 
   private function isLost(): bool
   {
-    return count($this->trials) > 5;
+    return count($this->trials) >= 6;
   }
 
   private function cleanCookies(): void
