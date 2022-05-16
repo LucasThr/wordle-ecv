@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 class Word
 {
-  public function getNewWord(): string
-  {
-    $this->word = file('../config/words.txt', FILE_IGNORE_NEW_LINES);
-    return $this->word[array_rand($this->word)];
-  }
+    public function getNewWord(): string
+    {
+        $this->word = file('../config/words.txt', \FILE_IGNORE_NEW_LINES);
+
+        return $this->word[array_rand($this->word)];
+    }
 }
